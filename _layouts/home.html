@@ -1,0 +1,177 @@
+---
+layout: default
+---
+
+<div class="home">
+  {%- if page.title -%}
+    <h1 class="page-heading">{{ page.title }}</h1>
+  {%- endif -%}
+
+  {{ content }}
+
+  <div class="carousel">
+
+    <div class="carousel-inner">
+
+      <div class="carousel-item active">
+        <div class="image-container"><img src="/assets/photos/statistics.jpeg" alt="Photo 1"></div>
+        <div class="image-container"><img src="/assets/photos/black_and_white.jpg" alt="Photo 1"></div>
+        <!-- <div class="image-container"><img src="/assets/photos/oscar copy 2.png" alt="Photo 2"></div> -->
+      </div>
+      <div class="carousel-item">
+        <div class="image-container"><img src="/assets/photos/waist-up-1.jpeg" alt="Photo 6"></div>
+        <div class="image-container"><img src="/assets/photos/trio_1.jpeg" alt="Photo 6"></div>
+      </div>
+      <div class="carousel-item">
+        <div class="image-container"><img src="/assets/photos/waist-up-2.jpeg" alt="Photo 5"></div>
+        <div class="image-container"><img src="/assets/photos/headshot-dark.png" alt="Photo 4"></div>
+      </div>
+      <div class="carousel-item">
+        <div class="image-container"><img src="/assets/photos/trio_3.jpeg" alt="Photo 5"></div>
+      </div>
+      <div class="carousel-item">
+        <div class="image-container"><img src="/assets/photos/side-profile_2.jpeg" alt="Photo 1"></div>
+        <div class="image-container"><img src="/assets/photos/side-profile-1.jpeg" alt="Photo 2"></div>
+      </div>
+
+      <div class="carousel-item">
+        <div class="image-container"><img src="/assets/photos/chess_b_w_side.JPG" alt="Photo 5"></div>
+        <div class="image-container"><img src="/assets/photos/trio_2.jpeg" alt="Photo 6"></div>
+        <!-- <div class="image-container"><img src="/assets/photos/side-profile-1.jpeg" alt="Photo 5"></div> -->
+        <!-- <div class="image-container"><img src="/assets/photos/chess_colour.JPG" alt="Photo 6"></div> -->
+      </div>
+
+
+    </div>
+      </div>
+    <button class="carousel-control-prev"></button>
+    <button class="carousel-control-next"></button>
+  </div>
+
+</div>
+
+<script>
+
+  document.addEventListener('DOMContentLoaded', function() {
+    const carouselItems = document.querySelectorAll('.carousel-item');
+
+    // Loop through each carousel item to check for empty images
+    carouselItems.forEach(item => {
+      const img = item.querySelector('img');
+      // If there's no img element or if the img src is empty, remove the carousel item
+      if (!img || !img.src) {
+        item.parentNode.removeChild(item);
+      }
+    });
+
+    let currentIndex = 0;
+    const slides = document.querySelectorAll('.carousel-item');
+    const totalSlides = slides.length;
+    const carouselInner = document.querySelector('.carousel-inner');
+
+    const slideWidth = slides[0] ? slides[0].getBoundingClientRect().width : 0; // Get the width of a slide
+
+
+    // Assuming all slides are the same width, calculate one slide's width
+    const updateSlidePosition = () => {
+      const offset = -(currentIndex * 100); // Move -100% per slide
+      carouselInner.style.transform = `translateX(${offset}%)`;
+    };
+
+    // Adjust to the initial position
+    // carouselInner.style.transform = `translateX(0px)`;
+
+    function updateCarousel(newIndex) {
+      slides[currentIndex].classList.remove('active'); // Remove active class from current slide
+
+      // Correctly wrap the newIndex for endless carousel functionality
+      currentIndex = (newIndex + totalSlides) % totalSlides;
+      const offset = currentIndex * -slideWidth;
+      carouselInner.style.transform = `translateX(${offset}px)`;
+
+      slides[currentIndex].classList.add('active'); // Add active class to new current slide
+
+      console.log('Updated to index:', currentIndex, 'Offset:', offset);
+    }
+
+
+
+
+    document.querySelector('.carousel-control-next').addEventListener('click', () => {
+      updateCarousel(currentIndex + 1); // Move to the next slide
+    });
+
+    document.querySelector('.carousel-control-prev').addEventListener('click', () => {
+      updateCarousel(currentIndex - 1); // Move to the previous slide
+    });
+
+    // Debug: Check for empty or undefined slides.
+    slides.forEach((slide, index) => {
+        if (!slide.innerHTML.trim()) {
+            console.error("Empty slide found at index:", index);
+        }
+    });
+
+    // Initial setup
+    if (slides.length > 0) { // Ensure there's at least one slide
+      updateSlidePosition(0); // Start from the first slide
+    }
+  });
+
+      // Calculate the new offset
+      // const offset = newIndex * -slideWidth;
+
+      // carouselInner.style.transform = `translateX(${offset}px)`;
+
+      // Move the carousel to the new offset
+      // document.querySelector('.carousel-inner').style.transform = `translateX(${offset}px)`;
+
+      // Set new index as the current index
+      // console.log('Current index', currentIndex)
+    //   currentIndex = newIndex;
+    //   console.log('Previous index:', currentIndex, 'New index:', newIndex, 'Offset:', offset);
+    // }
+
+  //   document.querySelector('.carousel-control-next').addEventListener('click', () => {
+  //     const nextIndex = (currentIndex + 1) % totalSlides;
+  //     console.log('Forward. nextIndex', nextIndex)
+  //     if (nextIndex === 0) { // We're wrapping around to the first slide
+  //       console.log('Wrap around forwards')
+  //       // console.log('nextIndex', nextIndex)
+  //       // Quickly reset to the first slide without animation
+  //       document.querySelector('.carousel-inner').style.transition = 'none';
+  //       updateCarousel(0);
+  //       // After a short delay, restart the animation
+  //       setTimeout(() => {
+  //         document.querySelector('.carousel-inner').style.transition = 'transform 0.5s ease';
+  //         updateCarousel(1);
+  //       });
+  //     } else {
+  //       updateCarousel(nextIndex);
+  //     }
+  //   });
+
+  //   document.querySelector('.carousel-control-prev').addEventListener('click', () => {
+  //     let prevIndex = currentIndex - 1;
+  //     console.log('Backward. prevIndex', prevIndex)
+  //     if (prevIndex < 0) { // We're wrapping around to the last slide
+  //       console.log('Wrap around backwards')
+
+  //       // Quickly reset to the last slide without animation
+  //       document.querySelector('.carousel-inner').style.transition = 'none';
+  //       updateCarousel(totalSlides - 1);
+  //       // After a short delay, restart the animation
+  //       setTimeout(() => {
+  //         document.querySelector('.carousel-inner').style.transition = 'transform 0.5s ease';
+  //         updateCarousel(totalSlides - 2);
+  //       });
+  //     } else {
+  //       updateCarousel(prevIndex);
+  //     }
+  //   });
+
+  //   // Initialize carousel position
+  //   updateCarousel(currentIndex);
+  // });
+
+</script>

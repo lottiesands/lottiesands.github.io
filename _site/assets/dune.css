@@ -1,0 +1,262 @@
+
+.header {
+    display: flex;
+    flex-direction: column; /* This line is added */
+    justify-content: center;
+    align-items: center;
+    padding-top: 20px;
+    padding: 1rem 2rem;
+    background-color: #fafafa;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    z-index: 5;
+}
+
+.left, .center, .right {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.left {
+    justify-content: flex-start;
+}
+
+.right {
+    justify-content: flex-end;
+}
+
+.nav-link {
+    background-color: #fafafa; 
+    padding-top: 0px;
+    border: none;
+    color: #302e2c;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 12px;
+    font-size: 0.8rem; /* Increase the font size as needed */
+    letter-spacing: 0.2em; /* Decrease the space between letters; adjust as needed */
+  }
+
+
+.nav-link:hover, .home-link:hover {
+    background-color: #f4eee1;
+    color: #302e2c; 
+}
+
+.home-link {
+    /* Keep images small */
+    width: 200px;
+    height: 50px;
+    font-size: 1.8rem; /* Increase the font size as needed */
+    letter-spacing: 0em; /* Decrease the space between letters; adjust as needed */
+    padding-top: 5px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 3px;
+    font-family: 'Ramus', sans-serif; /* Fallback to sans-serif in case Ramus doesn't load */
+  }
+
+.nav-link:hover::after {
+    content: '';
+    display: block;
+    width: calc(100% - 2em); /* Width of the text; adjust the subtracted value based on your padding */
+    height: 2px; /* Height of the underline */
+    background-color: currentColor; 
+    position: absolute;
+    color: #fafafa;
+    left: 1em; /* Align with the text inside the link */
+    bottom: 7px; /* Adjust to move the underline closer or further from the text */
+  }  
+
+a:hover {
+    background-color: transparent; /* Ensures no background color on hover */
+    text-decoration: none; /* Disables the default underline */
+    position: relative; 
+  }
+
+
+
+.home {
+    width: 100%;
+}
+
+.carousel {
+    position: relative;
+    /* max-width: 100%; */
+    width: 100%;
+    overflow: hidden;
+
+    background-color: #fafafa; /* Off-white background color */
+  }
+  
+.carousel-inner {
+    display: flex;
+    transition: transform 0.5s ease;
+    width: calc(100% * var(--total-slides)); 
+    flex-direction: row;
+  
+    background-color: #fafafa;
+  }
+
+.carousel-item {
+    display: flex;
+    width: 100%;
+    flex: 0 0 100%; 
+    transition: transform 0.5s ease; 
+
+    background-color: #fafafa;
+  }  
+
+
+
+
+  /* Initially, all slides are off-screen except for the first one */
+.carousel-item:not(:first-child) {
+    transform: translateX(100%);
+  }
+
+.carousel-item.active {
+    transform: translateX(0);
+  }
+/* Initially, all slides are off-screen except for the first one */
+.carousel-item:not(.active) {
+    transform: translateX(100%);
+  }
+
+.image-container {
+    flex: 1;
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    overflow: hidden; 
+    padding: 0; 
+  }
+  
+.image-container img {
+    max-width: 100%; 
+    max-height: 100%; 
+    height: auto; 
+    display: block; 
+  }
+
+.carousel-control-prev, 
+.carousel-control-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    /* background-color: transparent; Adjust as needed */
+    border: none;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    background-color: transparent;
+    background-size: contain; /* Ensure the image is scaled correctly */
+    background-repeat: no-repeat; /* Prevent the image from repeating */
+    background-position: center; /* Center the background image */
+  
+    z-index: 2;
+  }
+
+/* Extend the clickable area */
+.carousel-control-prev::before, 
+.carousel-control-next::before {
+    content: '';
+    position: absolute;
+    top: -50vh; /* Start 50% above the button */
+    bottom: -50vh; /* End 50% below the button */
+    left: -50vw; /* Start 50% left from the button */
+    right: -50vw; /* End 50% right from the button */
+    background: transparent; /* Ensure the pseudo-element doesn't have a background */
+    z-index: -1; /* Place it below the visual button */
+}
+
+.carousel-control-prev {
+    left: 10px;
+    background-image: url('/assets/arrow-left.png');
+  } 
+  
+.carousel-control-next {
+    right: 10px;
+    background-image: url('/assets/arrow-right.png');
+  }
+
+/* Adjust the actual clickable arrow area to be, say, 50px by 50px */
+.carousel-control-prev::after, .carousel-control-next::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    /* transform: translate(-50%, -50%); */
+    width: 50%; /* Width of the clickable area */
+    height: 100%; /* Height of the clickable area */
+    background: transparent;
+  }
+  
+
+
+.contact-image {
+    width: 400px; /* Adjusted to fit the image */
+    align-items: center;
+    justify-content: center;
+}
+.twitter {
+    width: 50px; /* Adjusted to fit the icon */
+    margin-right: 1rem; /* Space between icon and text */
+}
+.linkedin {
+    width: 50px; /* Adjusted to fit the icon */
+    margin-right: 1rem; /* Space between icon and text */
+}
+.instagram {
+    width: 80px; /* Adjusted to fit the icon */
+    margin-right: 1rem; /* Space between icon and text */
+}
+.medium {
+    width: 50px; /* Adjusted to fit the icon */
+    margin-right: 1rem; /* Space between icon and text */
+}
+.github {
+    width: 50px; /* Adjusted to fit the icon */
+    margin-right: 1rem; /* Space between icon and text */
+
+}
+.socials {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 0.2rem; /* Space between image and social links */
+
+}
+.twitter .linkedin .medium {
+    /* color: #333; Sets color */
+    display: flex;
+    justify-content: center;
+}
+.contact-image .email-link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem; /* Space between social links and email */
+}
+
+.contact-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centers the children (including the a tag) horizontally in the container */
+    text-align: center; /* Centers the text inside the column */
+
+}
+
+.contact-column a {
+    color: #613b16 !important; /* Brown */
+    text-decoration: none !important;
+}
+.contact-column a:hover {
+    text-decoration: underline !important; /* Underline on hover for better UX */
+}
