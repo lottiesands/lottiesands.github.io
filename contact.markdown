@@ -7,7 +7,7 @@ permalink: /contact/
 <div class="contact-column">
     <p>For any enquiries, please get in contact via email at:</p>
     
-    <a href="mailto:oscar@oscarmoxon.com" class="email-link">
+    <a href="mailto:charlottesands25@gmail.com" class="email-link">
       <img src="/assets/contact-email.png" alt="Contact Details Image" class="contact-image" />
     </a>
   
