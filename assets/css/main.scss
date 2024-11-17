@@ -1,0 +1,346 @@
+---
+---
+
+/* Dots positioning */
+
+/* Thumbnail strip */
+.thumbnail-strip {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    bottom: 40px;
+    width: fit-content;
+    margin: 0 auto;
+}
+
+.thumbnail {
+    width: 60px;
+    height: 40px;
+    cursor: pointer;
+    position: relative;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    opacity: 0.7;
+    
+    &:hover {
+        opacity: 1;
+        transform: translateY(-2px);
+    }
+    
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+    
+    &.active {
+        border-color: #2196F3;
+        opacity: 1;
+        transform: translateY(-2px);
+    }
+}
+
+.thumbnail.active {
+    border-color: #dfdfdf;
+}
+
+/* Update the logo container styles */
+.logo-container {
+    position: absolute;
+    top: 550px;
+    /* Center using left 50% and transform */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    width: 200px;
+    height: auto;
+    opacity: 0;
+    transition: opacity 0.5s ease-out;
+}
+
+.logo-container.visible {
+    opacity: 1;
+}
+
+.logo-container img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+/* Adjust carousel container to make room for logo */
+.carousel .slick-current {
+    opacity: 1;
+    z-index: 2;
+}
+
+
+/* Add responsive adjustments */
+@media (max-width: 768px) {
+    .multi-image-container {
+        padding: 0 20px;
+        gap: 10px;
+    }
+    
+    .multi-image-container img {
+        max-width: 32%; /* Slightly adjust for smaller screens */
+    }
+    
+    .multi-image-container:has(img:nth-child(2):last-child) img {
+        max-width: 48%;
+    }
+}
+
+/* Add to your main.css */
+.carousel-container {
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.carousel-container.loaded {
+    opacity: 1;
+}
+
+/* Modify the initial hide state to maintain layout */
+.carousel:not(.slick-initialized) {
+    visibility: hidden;
+    position: relative;
+    display: block; /* Ensure the element takes up space */
+}
+
+/* Ensure slide groups are hidden but maintain structure */
+.carousel:not(.slick-initialized) .slide-group {
+    display: none;
+}
+
+/* First slide group should still take up space */
+.carousel:not(.slick-initialized) .slide-group:first-child {
+    display: block;
+    visibility: hidden;
+}
+
+@keyframes spin {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+.carousel {
+    width: 100%;
+    height: 100%;
+    touch-action: pan-y pinch-zoom;
+}
+
+.carousel .slick-list,
+.carousel .slick-track {
+    height: 100%;
+}
+
+.carousel .slick-slide {
+    // opacity: 0.5;
+    // transition: opacity 0.5s ease-out;
+    position: relative;
+    z-index: 1;
+}
+
+.carousel .slick-slide > div {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    /* Add visible border to see boundaries */
+    // border: 2px solid blue;
+}
+
+.carousel img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+}
+
+/* Hide default slick arrows */
+.slick-prev,
+.slick-next {
+    display: none !important;
+}
+
+/* Click areas with gradients */
+.click-area {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 50%;
+    cursor: pointer;
+    z-index: 1;
+}
+
+.click-left {
+    left: 0;
+    background: linear-gradient(
+        to right,
+        rgba(0, 0, 0, 0.1) 0%,
+        rgba(0, 0, 0, 0) 100%
+    );
+}
+
+.click-right {
+    right: 0;
+    background: linear-gradient(
+        to left,
+        rgba(0, 0, 0, 0.1) 0%,
+        rgba(0, 0, 0, 0) 100%
+    );
+}
+
+/* Metrics section */
+.metrics-section {
+    width: 80%;
+    margin: 0 auto;  /* Changed from 150px */
+    padding: 20px;
+    max-width: 600px;
+    position: relative;
+}
+
+/* Center line */
+.metrics-section::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 1px;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.metric-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 15px 0;
+    position: relative;
+}
+
+.metric-label {
+    width: 50%;
+    text-align: right;
+    padding-right: 30px;
+    font-size: 1.1em;
+    color: #333;
+}
+
+.metric-value {
+    width: 50%;
+    text-align: left;
+    padding-left: 30px;
+    font-size: 1.1em;
+    color: #666;
+}
+
+/* Add smooth scroll behavior */
+html {
+    scroll-behavior: smooth;
+}
+
+.multi-image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    height: 100%;
+    padding: 20px 40px 15px 40px;  /* Added top padding of 80px */
+    
+    /* Extreme positioning tests - try these one at a time */
+    /* Test 1: Extreme left shift */
+    transform: translateX(-40px);
+    
+    /* Test 2: Extreme right shift (uncomment to test) */
+    /* transform: translateX(200px); */
+    
+    /* Test 3: Absolute positioning (uncomment to test) */
+    /* position: absolute;
+    left: 0;
+    right: 0; */
+    
+    /* Test 4: Negative margin (uncomment to test) */
+    /* margin-left: -100px; */
+    
+    /* Test 5: Force container width and center (uncomment to test) */
+    /* width: 80vw;
+    margin-left: auto;
+    margin-right: auto; */
+    
+    /* Add a border to visualize the container */
+    // border: 2px solid red;
+}
+
+.multi-image-container img {
+    max-width: 30%; /* Limit width when showing 3 images */
+    max-height: 80vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    transition: opacity 0.3s ease-out;
+}
+
+/* Adjust for 2 images */
+.multi-image-container:has(img:nth-child(2):last-child) img {
+    max-width: 45%; /* Larger max-width when only 2 images */
+}
+
+/* Adjust for single image */
+.multi-image-container:has(img:only-child) img {
+    max-width: 90%; /* Full width when single image */
+}
+
+/* Add to main.css */
+.metrics-with-squares {
+    display: flex;
+    justify-content: space-between;  /* Changed from center */
+    align-items: stretch;  /* Changed from flex-start */
+    gap: 20px;
+    width: 90%;
+    max-width: 1200px;
+    margin: 200px auto 40px auto;  
+}
+
+.side-square {
+    width: 250px;  /* Adjusted width */
+    height: 250px;  /* Changed from fixed height */
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+    margin-top: 0;  /* Removed margin-top */
+    aspect-ratio: 1;  /* Makes it square */
+}
+
+.side-square a {
+    color: #333;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+}
+
+.side-square a:hover {
+    transform: translateY(-2px);
+    color: #000;
+}
+
+.side-square svg {
+    width: 24px;
+    height: 24px;
+}
+
+.inquire-text {
+    font-size: 1.1em;
+    font-weight: 500;
+}

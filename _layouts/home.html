@@ -2,138 +2,71 @@
 layout: default
 ---
 
-<div class="home">
-  {%- if page.title -%}
-    <h1 class="page-heading">{{ page.title }}</h1>
-  {%- endif -%}
-
-  {{ content }}
-
-  <div class="carousel">
-
-    <div class="carousel-inner">
-
-      <div class="carousel-item active">
-        <div class="image-container"><img src="/assets/photos/statistics.jpeg" alt="Photo 1"></div>
-        <div class="image-container"><img src="/assets/photos/headshot-bw.png" alt="Headshot"></div>
-      </div>
-      <div class="carousel-item">
-        <div class="image-container"><img src="/assets/photos/waist-up-1.jpeg" alt="Photo 2"></div>
-        <div class="image-container"><img src="/assets/photos/trio_1.jpeg" alt="Photo 3"></div>
-      </div>
-      <div class="carousel-item">
-        <div class="image-container"><img src="/assets/photos/waist-up-2.jpeg" alt="Photo 4"></div>
-        <div class="image-container"><img src="/assets/photos/headshot-dark.png" alt="Photo 5"></div>
-      </div>
-      <div class="carousel-item">
-        <div class="image-container"><img src="/assets/photos/trio_3.jpeg" alt="Photo 6"></div>
-      </div>
-      <div class="carousel-item">
-        <div class="image-container"><img src="/assets/photos/side-profile_2.jpeg" alt="Photo 7"></div>
-        <div class="image-container"><img src="/assets/photos/side-profile-1.jpeg" alt="Photo 8"></div>
-      </div>
-
-      <div class="carousel-item">
-        <div class="image-container"><img src="/assets/photos/chess_b_w_side.JPG" alt="Photo 9"></div>
-        <div class="image-container"><img src="/assets/photos/trio_2.jpeg" alt="Photo 10"></div>
-        <!-- <div class="image-container"><img src="/assets/photos/side-profile-1.jpeg" alt="Photo 5"></div> -->
-        <!-- <div class="image-container"><img src="/assets/photos/chess_colour.JPG" alt="Photo 6"></div> -->
-      </div>
-
-    </div>
-      </div>
-    <button class="carousel-control-prev"></button>
-    <button class="carousel-control-next"></button>
-  </div>
-
+<div class="main-content">
+    {{ content }}
 </div>
 
-<script>
+<div class="carousel-container">
+    <!-- Main Carousel -->
+    <div class="main-carousel">
+        {% for image in site.static_files %}
+            {% if image.path contains 'photos/assets/photos' %}
+                <div class="carousel-slide {% if forloop.first %}active{% endif %}">
+                    <img src="{{ image.path | relative_url }}" alt="Model photo {{ forloop.index }}">
+                </div>
+            {% endif %}
+        {% endfor %}
+        
+        <button class="carousel-button prev">
+            <img src="{{ '/assets/js/arrow-left.png' | relative_url }}" alt="Previous">
+        </button>
+        <button class="carousel-button next">
+            <img src="{{ '/assets/js/arrow-right.png' | relative_url }}" alt="Next">
+        </button>
+    </div>
 
-  document.addEventListener('DOMContentLoaded', function() {
-    const carouselItems = document.querySelectorAll('.carousel-item');
+    <!-- Thumbnails -->
+    <div class="thumbnail-grid">
+        {% for image in site.static_files %}
+            {% if image.path contains 'photos/assets/photos' %}
+                <div class="thumbnail {% if forloop.first %}active{% endif %}">
+                    <img src="{{ image.path | relative_url }}" alt="Thumbnail {{ forloop.index }}">
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
 
-    const imagesToPreload = [
-        '/assets/photos/statistics.jpeg',
-        '/assets/photos/headshot-bw.png',
-        '/assets/photos/waist-up-1.jpeg',
-        '/assets/photos/trio_1.jpeg',
-        '/assets/photos/waist-up-2.jpeg',
-        '/assets/photos/headshot-dark.png',
-        '/assets/photos/trio_3.jpeg',
-        '/assets/photos/side-profile_2.jpeg',
-        '/assets/photos/side-profile-1.jpeg',
-        '/assets/photos/chess_b_w_side.JPG',
-        '/assets/photos/trio_2.jpeg'
-    ];
+    <!-- Specifications -->
+    <div class="specs-container">
+        <div class="spec-row">
+            <div class="spec-label">Height</div>
+            <div class="spec-value">5'8"</div>
+        </div>
+        <div class="spec-row">
+            <div class="spec-label">Bust</div>
+            <div class="spec-value">32"</div>
+        </div>
+        <div class="spec-row">
+            <div class="spec-label">Waist</div>
+            <div class="spec-value">26"</div>
+        </div>
+        <div class="spec-row">
+            <div class="spec-label">Hips</div>
+            <div class="spec-value">36"</div>
+        </div>
+        <div class="spec-row">
+            <div class="spec-label">Shoe</div>
+            <div class="spec-value">US 8</div>
+        </div>
+        <div class="spec-row">
+            <div class="spec-label">Hair</div>
+            <div class="spec-value">Brown</div>
+        </div>
+        <div class="spec-row">
+            <div class="spec-label">Eyes</div>
+            <div class="spec-value">Blue</div>
+        </div>
+    </div>
+</div>
 
-    imagesToPreload.forEach(imageUrl => {
-        const img = new Image();
-        img.src = imageUrl;
-    });
-
-    // Loop through each carousel item to check for empty images
-    carouselItems.forEach(item => {
-      const img = item.querySelector('img');
-      // If there's no img element or if the img src is empty, remove the carousel item
-      if (!img || !img.src) {
-        item.parentNode.removeChild(item);
-      }
-    });
-
-    let currentIndex = 0;
-    const slides = document.querySelectorAll('.carousel-item');
-    const totalSlides = slides.length;
-    const carouselInner = document.querySelector('.carousel-inner');
-
-    const slideWidth = slides[0] ? slides[0].getBoundingClientRect().width : 0; // Get the width of a slide
-
-
-    // Assuming all slides are the same width, calculate one slide's width
-    const updateSlidePosition = () => {
-      const offset = -(currentIndex * 100); // Move -100% per slide
-      carouselInner.style.transform = `translateX(${offset}%)`;
-    };
-
-    // Adjust to the initial position
-    // carouselInner.style.transform = `translateX(0px)`;
-
-    function updateCarousel(newIndex) {
-      slides[currentIndex].classList.remove('active'); // Remove active class from current slide
-
-      // Correctly wrap the newIndex for endless carousel functionality
-      currentIndex = (newIndex + totalSlides) % totalSlides;
-      const offset = currentIndex * -slideWidth;
-      carouselInner.style.transform = `translateX(${offset}px)`;
-
-      slides[currentIndex].classList.add('active'); // Add active class to new current slide
-
-      console.log('Updated to index:', currentIndex, 'Offset:', offset);
-    }
-
-
-
-
-    document.querySelector('.carousel-control-next').addEventListener('click', () => {
-      updateCarousel(currentIndex + 1); // Move to the next slide
-    });
-
-    document.querySelector('.carousel-control-prev').addEventListener('click', () => {
-      updateCarousel(currentIndex - 1); // Move to the previous slide
-    });
-
-    // Debug: Check for empty or undefined slides.
-    slides.forEach((slide, index) => {
-        if (!slide.innerHTML.trim()) {
-            console.error("Empty slide found at index:", index);
-        }
-    });
-
-    // Initial setup
-    if (slides.length > 0) { // Ensure there's at least one slide
-      updateSlidePosition(0); // Start from the first slide
-    }
-  });
-
-
-</script>
+<script src="{{ '/assets/js/carousel.js' | relative_url }}"></script>
